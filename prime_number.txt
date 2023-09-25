@@ -1,0 +1,47 @@
+*&---------------------------------------------------------------------*
+*& Report ZPRIME_NUMBER
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zprime_number.
+
+DATA: lv_number      TYPE i,
+      lv_is_prime    TYPE abap_bool VALUE abap_true,
+      lv_divisor     TYPE i,
+      lv_max_divisor TYPE i.
+
+
+PARAMETERS p_number TYPE i.
+lv_number = p_number.
+
+
+IF lv_number <= 1.
+  WRITE 'The number must be greater than 1 to test for primality.'.
+ELSEIF lv_number = 2.
+  WRITE '2 - prime number.'.
+ELSE.
+
+
+  lv_max_divisor = lv_number / 2.
+  lv_divisor = 2.
+
+  DO.
+    IF lv_divisor > lv_max_divisor.
+      EXIT.
+    ENDIF.
+
+    IF lv_number MOD lv_divisor = 0.
+      lv_is_prime = abap_false.
+      EXIT.
+    ENDIF.
+
+    lv_divisor = lv_divisor + 1.
+  ENDDO.
+
+
+  IF lv_is_prime = abap_true.
+    WRITE: lv_number, ' - prime number.'.
+  ELSE.
+    WRITE: lv_number, ' - is not a prime number.'.
+  ENDIF.
+ENDIF.
